@@ -1,35 +1,45 @@
-export const List = {
-    range: (a,b) => [...Array(b-a+1)].map((n,i)=> i+a),
-    reverse: array => [...array].reverse(),
-    sort: array => [...array].sort((a,b)=> a - b),
-    sum: array => array.reduce((S,n)=> S+n,0),
-    product: array => array.reduce((S,n)=> S*n),
-    isEmpty: array => array.length === 0,
-    first: array => array[0],
-    last: array => array[array.length -1],
-    max: array => Math.max(...array),
-    min: array => Math.min(...array),
-    replaceAt: (array, index, item) => [...array.slice(0,index),item,...array.slice(index+1, array.length)],
-    replace: (array, itemOut, itemIn) => array.map(n => n === itemOut ? itemIn : n),
-    insert: (array, index, item) => [...array.slice(0,index), item,...array.slice(index, array.length)],
-    append: (array, item) => [...array,item],
-    prepend: (array, item) => [item,...array],
-    remove: (array, item) => array.filter(n=> n !== item),
-    removeAt: (array, index) => array.filter((n,i) => i !== index),
-    init: array => array.slice(0, array.length-1), 
-    tail: array => array.slice(1, array.length),
-    take: (array, numOfItems) => array.slice(0, numOfItems),
-    drop: (array, numOfItems) => array.slice(numOfItems),
-    unique: array => [...new Set(array)], 
-    isEqual: (array1, array2) => array1.filter((n,i) => n === array2[i]).length === array1.length,
-    combine: (array1, array2, func) => array1.flatMap(n => array2.map(m=> func(n,m))),
-    zip: (array1, array2) => array1.map((n,i) => array2[i] ? [n,array2[i]] : null).filter(Boolean),
-    shuffle: array => {
-    const a = [...array]
-    for(let i = a.length-1,r;i;i--){
-      r = Math.floor((Math.random()*(i+1)));
-      [a[i],a[r]] = [a[r],a[i]]
-    }
-    return a
-    }
+export const range = (first,end, step=1) => [...Array(Math.floor(end/step))].map((n,i)=> first + i*step).filter(x=> x<=end)
+export const alphaRange = (first,end, alphabet=[...'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz']) => alphabet.slice(alphabet.indexOf(first), alphabet.indexOf(end)+1)
+export const stepRange = (first, end, step) => [...Array(Math.floor(end/step))].map((n,i)=> (i+1)*step)
+export const takeRange = (first, second, length) => [...Array(length)].map((n,i)=> first + i*(second-first))
+export const replicate = (item, length) => [...Array(length)].map(n=> item)
+export const cycle = (list, length) => [...Array(length)].flatMap(n=> list).filter((m,i)=> i < length)
+export const reverse = array => [...array].reverse()
+export const sort = array => [...array].sort((a,b)=> a - b)
+export const sum = array => array.reduce((S,n)=> S+n,0)
+export const product =  array => array.reduce((S,n)=> S*n)
+export const isEmpty = array => array.length === 0
+export const first = array => array[0]
+export const last = array => array[array.length -1]
+export const max = array => Math.max(...array)
+export const min = array => Math.min(...array)
+export const replaceAt = (array, index, item) => [...array.slice(0,index),item,...array.slice(index+1, array.length)]
+export const replace = (array, itemOut, itemIn) => array.map(n => n === itemOut ? itemIn : n)
+export const insert = (array, index, item) => [...array.slice(0,index), item,...array.slice(index, array.length)]
+export const append = (array, item) => [...array,item]
+export const prepend = (array, item) => [item,...array]
+export const remove = (array, item) => array.filter(n=> n !== item)
+export const removeAt = (array, index) => array.filter((n,i) => i !== index)
+export const init = array => array.slice(0, array.length-1) 
+export const tail = array => array.slice(1, array.length)
+export const take = (array, numberOfItems) => array.slice(0, numberOfItems)
+export const drop = (array, numOfItems) => array.slice(numOfItems)
+export const unique = array => [...new Set(array)]
+export const isEqual = (array1, array2) => array1.filter((n,i) => n === array2[i]).length === array1.length
+export const combine = (array1, array2, func) => array1.map(n => array2.map(m=> func(n,m))).flat()
+export const zip = (array1, array2) => array1.map((n,i) => array2[i] ? [n,array2[i]] : null).filter(Boolean)
+export const shuffle = array => {
+  const a = [...array]
+  for(let i = a.length-1,r;i;i--){
+    r = Math.floor((Math.random()*(i+1)));
+    [a[i],a[r]] = [a[r],a[i]]
   }
+  return a
+}
+
+
+const List = {
+  range, alphaRange, takeRange, replicate, cycle, reverse, sort, sum, product, isEmpty, first, last, max, min, replaceAt, replace, insert, append, prepend, remove, removeAt, init, tail, take, drop, unique, isEqual, combine, zip, shuffle
+}
+
+export default List
