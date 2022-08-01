@@ -5,20 +5,20 @@ A fundamental aspect of using lists/arrays in functional programming is that the
 
 For example,
 ```javascript
-const arr1 = [1,2,3]
+const arr = [1,2,3]
 
-List.reverse(arr1)
+List.reverse(arr)
 ```
-`arr1` will still have a value of `[1,2,3]` even though it has been passed through a function.
+`arr` will still have a value of `[1,2,3]` even though it has been passed through a function.
 
 Whereas using the inbuilt `reverse` JavaScript function:
 
 ```javascript
-const arr1 = [1,2,3]
+const arr = [1,2,3]
 
-arr1.reverse()
+arr.reverse()
 ```
-The value of `arr1` will now be `[3,2,1]`.
+The value of `arr` will now be `[3,2,1]`.
 
 ## Range Functions
 
