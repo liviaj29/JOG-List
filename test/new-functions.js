@@ -31,3 +31,44 @@ describe("intersection function", function(){
     })
 })
 
+describe("unzip function", function(){
+    it('should return unzip a zipped array', function(){
+        assert.deepEqual(List.unzip([[1,'a'],[2,'b']]), [[1,2],['a','b']])
+    })
+})
+
+describe("allDifferent function", function(){
+    it('should return return true if all elements are different', function(){
+        assert.equal(List.allDifferent([1,2,3,4,5]), true)
+    })
+    it('should return return false if some elements are the same', function(){
+        assert.equal(List.allDifferent([1,2,3,2,1]), false)
+    })
+})
+
+describe("transpose function", function(){
+    it('should transpose a square matrix', function(){
+        assert.deepEqual(List.transpose([[1,2,3],[4,5,6],[7,8,9]]), [[1,4,7],[2,5,8],[3,6,9]])
+    })
+})
+
+describe("words function", function(){
+    it('should split a sententce into a list of words', function(){
+        assert.deepEqual(List.words("I love JS"), ["I","love","JS"])
+    })
+})
+
+describe("group function", function(){
+    it('should group all the elements that are the same together into sublists', function(){
+        assert.deepEqual(List.group([3,1,4,1,4,3]), [[1,1],[3,3],[4,4]])
+    })
+})
+
+describe("heads and tails functions", function(){
+    it('should apply the heads function successively to the list', function(){
+        assert.deepEqual(List.heads([1,2,3]), [[1,2,3],[1,2],[1],[]])
+    })
+    it('should apply the tails function successively to the list', function(){
+        assert.deepEqual(List.tails([1,2,3]), [[1,2,3],[2,3],[3],[]])
+    })
+})
