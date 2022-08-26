@@ -72,3 +72,27 @@ describe("heads and tails functions", function(){
         assert.deepEqual(List.tails([1,2,3]), [[1,2,3],[2,3],[3],[]])
     })
 })
+
+describe("prefix and suffix functions", function(){
+    it("should return true as 'par' is a prefix 'party'", function(){
+        assert.equal(List.isPrefixOf("par", "party"), true)
+    })
+    it("should return false as hat is not a prefix of jumper", function(){
+        assert.equal(List.isPrefixOf("hat", "jumper"), false)
+    })
+    it("should return true as ry is a suffix of party", function(){
+        assert.equal(List.isSuffixOf("ty", "party"), true)
+    })
+    it("should return false as bad is not a suffix of good", function(){
+        assert.equal(List.isSuffixOf("bad", "good"), false)
+    })
+})
+
+describe("any function", function(){
+    it("should return true as 5 is greater than 4", function(){
+        assert.equal(List.any((x)=> x>4, [1,2,3,4,5]), true)
+    })
+    it("should return false as none of the values are longer than 4", function(){
+        assert.equal(List.any((x)=> x.length > 4, ["I", "am", "sad"]), false)
+    })
+})
