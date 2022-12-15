@@ -1,33 +1,69 @@
-export const range = (first,end, step=1) => [...Array(Math.floor(end/step))].map((n,i)=> first + i*step).filter(x=> x<=end)
-export const alphaRange = (first,end, alphabet=[...'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz']) => alphabet.slice(alphabet.indexOf(first), alphabet.indexOf(end)+1)
-export const stepRange = (first, end, step) => [...Array(Math.floor(end/step))].map((n,i)=> (i+1)*step)
-export const takeRange = (first, second, length) => [...Array(length)].map((n,i)=> first + i*(second-first))
-export const replicate = (item, length) => [...Array(length)].map(n=> item)
-export const cycle = (list, length) => [...Array(length)].flatMap(n=> list).filter((m,i)=> i < length)
-export const reverse = array => [...array].reverse()
+export const reverse = list => {
+  const array = [...list].reverse()
+  return typeof list === "string" ? array.join`` : array
+}
+
+
+export const map = (func,list) => {
+  const array = [...list].map(func)
+  return typeof list === "string" ? array.join`` : array
+}
+
+
+export const filter = (func,list) => {
+  const array = [...list].filter(func)
+  return typeof list === "string" ? array.join`` : array
+}
+
+export const cycle = (length, list) => {
+  const array = filter((m,i)=> i < length, [...Array(length)].flatMap(n=> [...list]))
+  return typeof list === "string" ? array.join`` : array
+}
+
+export const replaceAt = (index, item, list) => {
+  const array = [...list.slice(0,index),item,...list.slice(index+1, list.length)]
+  return typeof list === "string" ? array.join`` : array
+}
+
+export const replace = (itemOut, itemIn, list) => {
+  const array = map(item => item === itemOut ? itemIn : item, [...list])
+  return typeof list === "string" ? array.join`` : array
+}
+
+
+export const foldl = (func,initialValue,list) => [...list].reduce(func,initialValue)
+export const every = (func,list) => [...list].every(func)
+export const some = (func,list) => [...list].some(func)
+export const find = (func,list) => filter(func,list)[0]
+
+export const foldr = (func,initialValue,list) => [...list].reduceRight(func,initialValue)
 export const sort = array => [...array].sort((a,b)=> a - b)
 export const sum = array => array.reduce((S,n)=> S+n,0)
 export const product =  array => array.reduce((S,n)=> S*n)
-export const isEmpty = array => array.length === 0
-export const first = array => array[0]
-export const last = array => array[array.length -1]
+export const isEmpty = list => list.length === 0
+export const first = list => list[0]
+export const last = list => list[list.length -1]
 export const max = array => Math.max(...array)
 export const min = array => Math.min(...array)
-export const replaceAt = (array, index, item) => [...array.slice(0,index),item,...array.slice(index+1, array.length)]
-export const replace = (array, itemOut, itemIn) => array.map(n => n === itemOut ? itemIn : n)
-export const insert = (array, index, item) => [...array.slice(0,index), item,...array.slice(index, array.length)]
-export const append = (array, item) => [...array,item]
-export const prepend = (array, item) => [item,...array]
-export const remove = (array, item) => array.filter(n=> n !== item)
-export const removeAt = (array, index) => array.filter((n,i) => i !== index)
-export const init = array => array.slice(0, array.length-1) 
-export const tail = array => array.slice(1, array.length)
-export const take = (array, numberOfItems) => array.slice(0, numberOfItems)
-export const drop = (array, numOfItems) => array.slice(numOfItems)
-export const unique = array => [...new Set(array)]
-export const isEqual = (array1, array2) => array1.filter((n,i) => n === array2[i]).length === array1.length
-export const combine = (array1, array2, func) => array1.map(n => array2.map(m=> func(n,m))).flat()
-export const zip = (array1, array2) => array1.map((n,i) => array2[i] ? [n,array2[i]] : null).filter(Boolean)
+export const mode = array => first(sort(unique(array).map(x=> replicate(x, sort(array).filter(n=> n===x).length).length)))
+export const range = (first,end, step=1) => [...Array(Math.floor(end/step))].map((n,i)=> first + i*step).filter(x=> x<=end)
+export const alphaRange = (first,end, alphabet=[...'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz']) => alphabet.slice(alphabet.indexOf(first), alphabet.indexOf(end)+1)
+export const stepRange = (first, end, step) => [...Array(Math.floor(end/step))].map((n,i)=> (i+1)*step)
+export const append = (item, list) => typeof list === "string" ? list + item : [...list,item]
+export const prepend = (item, list) => typeof list === "string" ? item + list : [item,...list]
+export const remove = (item, list) => filter(n=> n !== item, list)
+export const removeAt = (index, list) => filter((n,i) => i !== index, list)
+export const init = list => list.slice(0, list.length-1)
+export const tail = list => list.slice(1, list.length)
+export const take = (numberOfItems, list) => list.slice(0, numberOfItems)
+export const drop = (numberOfItems, list) => list.slice(numberOfItems)
+export const unique = list => {
+  const array = [...new Set(list)]
+  return typeof list === "string" ? array.join`` : array
+}
+export const isEqual = (list1, list2) => typeof list1 === "string" ? list1 === list2 : list1.filter((n,i) => n === list2[i]).length === list1.length
+export const combine = (list1, list2, func = (x,y) => x + y) => [...list1].map(n => [...list2].map(m=> func(n,m))).flat()
+export const zip = (list1, list2) => [...list1].map((n,i) => list2[i] ? typeof list1 === "string" ? n + list2[i] : [n,list2[i]] : null).filter(Boolean)
 export const average = array => sum(array)/array.length
 export const median = array => {
   const sorted = sort(array)
@@ -35,33 +71,38 @@ export const median = array => {
   ? sorted[array.length/2 - 0.5]
   : (sorted[array.length/2-1] + sorted[array.length/2])/2
 }
-
-export const mode = array => first(sort(unique(array).map(x=> replicate(x, sort(array).filter(n=> n===x).length).length)))
+export const takeRange = (first, second, length) => map((n,i)=> first + i*(second-first), [...Array(length)])
+export const replicate = (item, length) => map(n=> item, [...Array(length)])
+export const replicateString = (item, length) => replicate(item, length).join``
+export const insertAt = (index, item, list) => {
+  const array = [...list.slice(0,index), item,...list.slice(index, list.length)]
+  return typeof list === "string" ? array.join`` : array
+}
 
 export const intersection = (array1,array2) => array1.filter(value => array2.includes(value))
-export const pickRandom = array => array[Math.floor(Math.random()*array.length)]
+export const pickRandom = list => list[Math.floor(Math.random()*list.length)]
 export const unzip = array => [array.map(pair => pair[0]),array.map(pair => pair[1])]
 export const allDifferent = array => unique(array).length === array.length
-export const transpose = array => array.map((n,i,a)=> n.map((_,j)=> a[j][i]))
-export const words = sentence => sentence.split` `.filter(x => x !== "")
-export const group = array => sort(unique(array)).map(x => replicate(x, sort(array).filter(n=> n===x).length))
-export const heads = item => replicate(null, item.length+1).map((x,i)=> item.slice(0,item.length - i))
-export const tails = item => replicate(null, item.length+1).map((x,i)=> item.slice(i))
+export const transpose = array => array.length === fold((s,x)=> s+x.length, 0, array) ? map((n,i,a)=> map((_,j)=> a[j][i], n), array) : "funky dimensions"
+export const words = sentence => filter(x => x !== "", sentence.split` `)
+export const group = array => map(x => replicate(x, sort(array).filter(n=> n===x).length), sort(unique(array)))
+export const heads = list => map((x,i)=> list.slice(0,list.length - i), replicate(null, list.length+1))
+export const tails = list => map((x,i)=> list.slice(i), replicate(null, list.length+1))
 export const isPrefixOf = (prefix, item) => heads(item).includes(prefix)
 export const isSuffixOf = (suffix,item) => tails(item).includes(suffix)
-export const any = (condition, item) => item.filter(condition).length !== 0
-export const shuffle = array => {
-  const a = [...array]
+export const any = (condition, list) => filter(condition, list).length !== 0
+export const shuffle = item => {
+  const a = [...item]
   for(let i = a.length-1,r;i;i--){
     r = Math.floor((Math.random()*(i+1)));
     [a[i],a[r]] = [a[r],a[i]]
   }
-  return a
+  return typeof item === "string" ? a.join`` : a
 }
 
 
 const List = {
-  range, alphaRange, takeRange, replicate, cycle, reverse, sort, sum, product, isEmpty, first, last, max, min, replaceAt, replace, insert, append, prepend, remove, removeAt, init, tail, take, drop, unique, isEqual, combine, zip, average, median, mode, intersection, pickRandom, unzip, allDifferent, transpose, words, group, heads, tails, isPrefixOf, isSuffixOf, any, shuffle
+  range, alphaRange, takeRange, replicate, cycle, reverse, sort, sum, product, isEmpty, first, last, max, min, replaceAt, replace, insertAt, append, prepend, remove, removeAt, init, tail, take, drop, unique, isEqual, combine, zip, average, median, mode, intersection, pickRandom, unzip, allDifferent, transpose, words, group, heads, tails, isPrefixOf, isSuffixOf, any, shuffle, map, filter, foldl, foldr, every, some, find
 }
 
 export default List
