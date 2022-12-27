@@ -11,4 +11,7 @@ describe("reverse function", function(){
     it('should return an array with the elements in reverse order', function(){
         assert.deepEqual(List.reverse([1,2,3,4,5]), [5,4,3,2,1])
     })
+    it('should reverse a string', function(){
+        assert.equal(List.reverse("JOG"), "GOJ")
+    })
 })
