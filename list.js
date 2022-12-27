@@ -83,7 +83,7 @@ export const intersection = (array1,array2) => array1.filter(value => array2.inc
 export const pickRandom = list => list[Math.floor(Math.random()*list.length)]
 export const unzip = array => [array.map(pair => pair[0]),array.map(pair => pair[1])]
 export const allDifferent = array => unique(array).length === array.length
-export const transpose = array => array.length === fold((s,x)=> s+x.length, 0, array) ? map((n,i,a)=> map((_,j)=> a[j][i], n), array) : "funky dimensions"
+export const transpose = list => [...list[0]].map((n,i) => map((a,j) => a[i],list))
 export const words = sentence => filter(x => x !== "", sentence.split` `)
 export const group = array => map(x => replicate(x, sort(array).filter(n=> n===x).length), sort(unique(array)))
 export const heads = list => map((x,i)=> list.slice(0,list.length - i), replicate(null, list.length+1))
