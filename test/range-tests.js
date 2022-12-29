@@ -42,9 +42,9 @@ describe("replicate function", function(){
 
 describe("cycle function", function(){
     it('should return an array of length 10 that replicates the items in [1,2,3]', function(){
-        assert.deepEqual(List.cycle([1,2,3], 10), [1,2,3,1,2,3,1,2,3,1])
+        assert.deepEqual(List.cycle(10, [1,2,3]), [1,2,3,1,2,3,1,2,3,1])
     })
     it('should return an array of length 15 that replicate the items in [4,2,7,6]', function(){
-        assert.deepEqual(List.cycle([4,2,7,6], 15), [4,2,7,6,4,2,7,6,4,2,7,6,4,2,7])
+        assert.deepEqual(List.cycle(15, [4,2,7,6]), [4,2,7,6,4,2,7,6,4,2,7,6,4,2,7])
     })
 })

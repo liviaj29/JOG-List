@@ -30,10 +30,10 @@ describe("init and tail functions", function(){
 
 describe("take and drop functions", function(){
     it('should return the array with the first specified number of elements', function(){
-        assert.deepEqual(List.take([1,2,3,4,5,6],4), [1,2,3,4])
+        assert.deepEqual(List.take(4,[1,2,3,4,5,6]), [1,2,3,4])
     })
     it('should return the array without the first specified number of elements', function(){
-        assert.deepEqual(List.drop([1,2,3,4,5,6],4), [5,6])
+        assert.deepEqual(List.drop(4,[1,2,3,4,5,6]), [5,6])
     })
 })
 

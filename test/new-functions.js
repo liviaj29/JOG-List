@@ -50,6 +50,9 @@ describe("transpose function", function(){
     it('should transpose a square matrix', function(){
         assert.deepEqual(List.transpose([[1,2,3],[4,5,6],[7,8,9]]), [[1,4,7],[2,5,8],[3,6,9]])
     })
+    it('should transpose a non-square matrix', function(){
+        assert.deepEqual(List.transpose([[1,2],[4,5],[7,8]]), [[1,4,7],[2,5,8]])
+    })
 })
 
 describe("words function", function(){
